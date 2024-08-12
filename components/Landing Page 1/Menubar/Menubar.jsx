@@ -21,18 +21,25 @@ const NAV_ITEMS = [
 const Menubar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setHasScrolled(window.scrollY > 0);
-    const handleResize = () => setIsMobile(window.innerWidth < 1024);
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
+    if (typeof window !== "undefined") {
+      // Now we're sure it's running on the client side
+      const handleScroll = () => setHasScrolled(window.scrollY > 0);
+      const handleResize = () => setIsMobile(window.innerWidth < 1024);
+      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("resize", handleResize);
+
+      // Initial check
+      setIsMobile(window.innerWidth < 1024);
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   const isActive = (href) => pathname === href;
