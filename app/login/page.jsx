@@ -1,17 +1,20 @@
 import Image from "next/image";
 import React from "react";
 import loginImage from "@/public/login/login.png";
+
+import logo from "@/public/Riding-Assets/logo.png";
+
 export default function Page() {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center mt-20">
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div>
-            <Image src="/UiZen.png" width={128} height={128} alt="Logo" />
+            <Image src={logo} width={100} height={100} alt="Logo" />
           </div>
 
           <div className="mt-12 flex flex-col items-center">
-            <h1 className="text-2xl xl:text-3xl font-extrabold">Sign up</h1>
+            <h1 className="text-2xl xl:text-3xl font-extrabold">Login</h1>
             <div className="w-full flex-1 mt-8">
               <div className="flex flex-col items-center">
                 <button className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline">
@@ -81,7 +84,7 @@ export default function Page() {
                     <circle cx="8.5" cy="7" r="4" />
                     <path d="M20 8v6M23 11h-6" />
                   </svg>
-                  <span className="ml-3">Sign Up</span>
+                  <span className="ml-3">Login</span>
                 </button>
                 <p className="mt-6 text-xs text-gray-600 text-center">
                   I agree to abide by templatana&apos;s

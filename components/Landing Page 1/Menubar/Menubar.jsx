@@ -21,25 +21,17 @@ const NAV_ITEMS = [
 const Menubar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setHasScrolled(window.scrollY > 0);
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
-
-    // Only add event listeners if window is defined
-    if (typeof window !== "undefined") {
-      setIsMobile(window.innerWidth < 1024);
-      window.addEventListener("scroll", handleScroll);
-      window.addEventListener("resize", handleResize);
-    }
-
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
     return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", handleResize);
-      }
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -48,10 +40,19 @@ const Menubar = () => {
   const navClasses = (active) =>
     `flex items-center cursor-pointer px-3 py-2 rounded-md transition-all duration-300 ${
       active
-        ? "bg-green-500 text-black underline text-green-800"
+        ? "bg-[linear-gradient(to_top,_#454545,_#393939,_#2d2d2d,_#212121,_#161616,_#191919,_#1c1c1c,_#1f1f1f,_#323232,_#454545,_#5a5a5a,_#707070)] text-white"
         : hasScrolled
-        ? "text-black hover:text-[#fff] hover:bg-[linear-gradient(to_top,_#454545,_#393939,_#2d2d2d,_#212121,_#161616,_#191919,_#1c1c1c,_#1f1f1f,_#323232,_#454545,_#5a5a5a,_#707070)]"
-        : "text-black hover:text-[#fff] hover:bg-[linear-gradient(to_top,_#454545,_#393939,_#2d2d2d,_#212121,_#161616,_#191919,_#1c1c1c,_#1f1f1f,_#323232,_#454545,_#5a5a5a,_#707070)]"
+        ? "text-black hover:text-[#fff] hover:bg-gradient-to-r from-[#a88050] via-[#845a43] to-[#000000]"
+        : "text-black hover:text-[#fff] hover:bg-gradient-to-r from-[#a88050] via-[#845a43] to-[#000000]"
+    }`;
+
+  const buttonClasses = (active) =>
+    `uppercase px-3 py-2 rounded-md text-sm transition-all duration-300 ${
+      active
+        ? "bg-[linear-gradient(to_top,_#454545,_#393939,_#2d2d2d,_#212121,_#161616,_#191919,_#1c1c1c,_#1f1f1f,_#323232,_#454545,_#5a5a5a,_#707070)] text-white"
+        : hasScrolled
+        ? "text-black hover:text-[#fff] hover:bg-gradient-to-r from-[#a88050] via-[#845a43] to-[#000000]"
+        : "text-black hover:text-[#fff] hover:bg-gradient-to-r from-[#a88050] via-[#845a43] to-[#000000]"
     }`;
 
   return (
@@ -59,12 +60,12 @@ const Menubar = () => {
       className={`fixed top-0 left-0 right-0 z-20 transition-all duration-300 ${
         isMobile || hasScrolled
           ? "bg-[#d3eef9] shadow-md"
-          : "bg-[#d3eef9] text-black "
+          : "bg-transparent text-black"
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/home1" className="flex items-center gap-2">
             <Image src={logo} width={40} height={40} alt="Logo" />
           </Link>
           <nav className="hidden lg:block">
@@ -81,16 +82,18 @@ const Menubar = () => {
           <div className="">
             <div className="flex items-center gap-20">
               <div className="flex items-center gap-5">
-                <button className="uppercase text-sm">Log in</button>
-                <button
-                  className="uppercase px-3 py-2 rounded-md text-sm text-white"
-                  style={{
-                    background:
-                      "linear-gradient(to right top, #a88050, #845a43, #5b3b34, #302020, #000000)",
-                  }}
+                <Link
+                  href="/login"
+                  className={buttonClasses(pathname === "/login")}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/register"
+                  className={buttonClasses(pathname === "/register")}
                 >
                   Register
-                </button>
+                </Link>
               </div>
               <div className="hidden md:block">
                 <FaSearch className="text-3xl text-[#ffff]" />
