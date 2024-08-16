@@ -13,7 +13,7 @@ import logo from "@/public/Riding-Assets/logo.png";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/" },
-  { name: "Product", href: "/product" },
+  { name: "Products", href: "/products" },
   { name: "Gallery", href: "/gallery" },
   { name: "Contact", href: "/contact" },
 ];

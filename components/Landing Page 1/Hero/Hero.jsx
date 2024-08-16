@@ -27,19 +27,51 @@ const Hero = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const bikeSpecs = [
-    { title: "349 CC", subtitle: "ENGINE" },
-    { title: "13 Ltr", subtitle: "FUEL CAPACITY" },
-    { title: "5 speed", subtitle: "GEARS" },
-    { title: "6100 rpm", subtitle: "MAX POWER" },
+  const slidesData = [
+    {
+      title: "Slide 1",
+      description: "Description for slide 1",
+      specs: [
+        { title: "349 CC", subtitle: "ENGINE" },
+        { title: "13 Ltr", subtitle: "FUEL CAPACITY" },
+        { title: "5 speed", subtitle: "GEARS" },
+        { title: "6100 rpm", subtitle: "MAX POWER" },
+      ],
+      bgImage: bg.src,
+      bikeImage: bike.src,
+    },
+    {
+      title: "Slide 2",
+      description: "Description for slide 2",
+      specs: [
+        { title: "300 CC", subtitle: "ENGINE" },
+        { title: "10 Ltr", subtitle: "FUEL CAPACITY" },
+        { title: "6 speed", subtitle: "GEARS" },
+        { title: "6500 rpm", subtitle: "MAX POWER" },
+      ],
+      bgImage: bg.src,
+      bikeImage: bike.src,
+    },
+    {
+      title: "Slide 3",
+      description: "Description for slide 3",
+      specs: [
+        { title: "400 CC", subtitle: "ENGINE" },
+        { title: "15 Ltr", subtitle: "FUEL CAPACITY" },
+        { title: "4 speed", subtitle: "GEARS" },
+        { title: "7000 rpm", subtitle: "MAX POWER" },
+      ],
+      bgImage: bg.src,
+      bikeImage: bike.src,
+    },
   ];
 
-  const SlideContent = () => (
+  const SlideContent = ({ slide }) => (
     <main className="bg-[#d3edf9] h-screen">
       <div
         className="w-full h-full absolute top-16 md:top-0 right-0 bg-cover bg-center"
         style={{
-          backgroundImage: !isMobile ? `url(${bg.src})` : "none",
+          backgroundImage: !isMobile ? `url(${slide.bgImage})` : "none",
           backgroundSize: "50%",
           backgroundPosition: "top right",
           backgroundRepeat: "no-repeat",
@@ -50,11 +82,9 @@ const Hero = () => {
             <div className="text-center md:text-left mt-5 md:mt-0">
               <p className="font-bold text-base">Decoding the Essence of</p>
               <h2 className="caveat-regular text-5xl my-3 uppercase italic tracking-widest">
-                Riding
+                {slide.title}
               </h2>
-              <p className="text-[#42454a] text-sm">
-                Simple and sleek design <br /> with users in mind.
-              </p>
+              <p className="text-[#42454a] text-sm">{slide.description}</p>
               <button
                 className="mt-5 px-3 py-2 rounded-md text-sm text-white"
                 style={{
@@ -74,13 +104,18 @@ const Hero = () => {
                   </h2>
                 </div>
                 <figure className="relative z-10">
-                  <Image src={bike} width={600} height={600} alt="Hero Bike" />
+                  <Image
+                    src={slide.bikeImage}
+                    width={600}
+                    height={600}
+                    alt="Hero Bike"
+                  />
                 </figure>
               </div>
               <div className="flex justify-center items-center mt-40 mb-20 ml-0 md:-ml-[200px] lg:-ml-[700px]">
                 <div className=" border-[3px] border-[#35A7A0] px-4 py-2 md:py-5 rounded-lg shadow-md">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    {bikeSpecs.map((item, index) => (
+                    {slide.specs.map((item, index) => (
                       <div key={index} className="text-center">
                         <h2 className="font-bold text-lg md:text-xl text-gray-800">
                           {item.title}
@@ -120,9 +155,9 @@ const Hero = () => {
           loop={true}
           className="hero-swiper"
         >
-          {[...Array(3)].map((_, index) => (
+          {slidesData.map((slide, index) => (
             <SwiperSlide key={index}>
-              <SlideContent />
+              <SlideContent slide={slide} />
             </SwiperSlide>
           ))}
         </Swiper>
